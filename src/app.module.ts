@@ -6,6 +6,12 @@ import { CatalogModule } from './modules/catalog/catalog.module';
 import { CrmModule } from './modules/crm/crm.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { CrmService } from './crm.service';
+import { CrmController } from './crm.controller';
+import { CatalogService } from './catalog.service';
+import { CatalogController } from './catalog.controller';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
 
 @Module({
   imports: [
@@ -28,7 +34,7 @@ import { AppService } from './app.service';
     CatalogModule, // Микросервис каталога
     CrmModule,     // Микросервис CRM
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, CrmController, CatalogController, AuthController],
+  providers: [AppService, CrmService, CatalogService, AuthService],
 })
 export class AppModule {}
