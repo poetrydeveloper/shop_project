@@ -14,9 +14,6 @@ export class Customer {
   @Column({ length: 20 })
   phone: string;
 
-  @Column({ length: 100, nullable: true })
-  email: string;
-
   @Column({ nullable: true })
   address: string;
 

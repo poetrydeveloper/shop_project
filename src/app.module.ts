@@ -6,19 +6,10 @@ import { CatalogModule } from './modules/catalog/catalog.module';
 import { CrmModule } from './modules/crm/crm.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CrmService } from './crm.service';
-import { CrmController } from './crm.controller';
-import { CatalogService } from './catalog.service';
-import { CatalogController } from './catalog.controller';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: '.env',
-    }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
@@ -30,11 +21,11 @@ import { AuthController } from './auth.controller';
       }),
       inject: [ConfigService],
     }),
-    AuthModule,    // Микросервис аутентификации
-    CatalogModule, // Микросервис каталога
-    CrmModule,     // Микросервис CRM
+    AuthModule,
+    CatalogModule,
+    CrmModule,
   ],
-  controllers: [AppController, CrmController, CatalogController, AuthController],
-  providers: [AppService, CrmService, CatalogService, AuthService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
