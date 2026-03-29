@@ -1,21 +1,23 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
+export enum UserRole {
+  ADMIN = 'admin',
+  CUSTOMER = 'customer',
+}
+
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true, length: 100 })
-  username: string;
-
-  @Column({ length: 255 })
-  password: string;
-
-  @Column({ length: 100, nullable: true })
+  @Column({ unique: true })
   email: string;
 
-  @Column({ default: true })
-  isActive: boolean;
+  @Column()
+  password: string; // будет хранить хэш
+
+  @Column({ type: 'varchar', default: UserRole.CUSTOMER })
+  role: UserRole;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { CatalogService } from './catalog.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -6,6 +6,10 @@ import { CreateBrandDto } from './dto/create-brand.dto';
 import { UpdateBrandDto } from './dto/update-brand.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
+import { Roles } from '../../common/decorators/roles.decorator';
+import { UserRole } from '../auth/user.entity';
 
 @Controller('catalog')
 export class CatalogController {
@@ -13,6 +17,8 @@ export class CatalogController {
 
   // Categories
   @Post('categories')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   createCategory(@Body() createCategoryDto: CreateCategoryDto) {
     return this.catalogService.createCategory(createCategoryDto);
   }
@@ -28,6 +34,8 @@ export class CatalogController {
   }
 
   @Put('categories/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   updateCategory(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCategoryDto: UpdateCategoryDto,
@@ -36,12 +44,16 @@ export class CatalogController {
   }
 
   @Delete('categories/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   removeCategory(@Param('id', ParseIntPipe) id: number) {
     return this.catalogService.removeCategory(id);
   }
 
   // Brands
   @Post('brands')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   createBrand(@Body() createBrandDto: CreateBrandDto) {
     return this.catalogService.createBrand(createBrandDto);
   }
@@ -57,6 +69,8 @@ export class CatalogController {
   }
 
   @Put('brands/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   updateBrand(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateBrandDto: UpdateBrandDto,
@@ -65,12 +79,16 @@ export class CatalogController {
   }
 
   @Delete('brands/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   removeBrand(@Param('id', ParseIntPipe) id: number) {
     return this.catalogService.removeBrand(id);
   }
 
   // Products
   @Post('products')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   createProduct(@Body() createProductDto: CreateProductDto) {
     return this.catalogService.createProduct(createProductDto);
   }
@@ -86,6 +104,8 @@ export class CatalogController {
   }
 
   @Put('products/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   updateProduct(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProductDto: UpdateProductDto,
@@ -94,6 +114,8 @@ export class CatalogController {
   }
 
   @Delete('products/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   removeProduct(@Param('id', ParseIntPipe) id: number) {
     return this.catalogService.removeProduct(id);
   }
